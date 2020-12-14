@@ -153,8 +153,13 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  const circleX = circle.center.x;
+  const circleY = circle.center.y;
+  const pointX = point.x;
+  const pointY = point.y;
+  const distance = Math.sqrt((circleX - pointX) ** 2 + (circleY - pointY) ** 2);
+  return distance < circle.radius;
 }
 
 
@@ -199,8 +204,12 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  const firstD = (a < b) ? a : b;
+  const secondD = (a > b) ? a : b;
+  const firstBracket = isStartIncluded ? '[' : '(';
+  const secondBracket = isEndIncluded ? ']' : ')';
+  return `${firstBracket}${firstD}, ${secondD}${secondBracket}`;
 }
 
 
@@ -310,8 +319,22 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  if (str.length === 0) return true;
+  if (str.length % 2 !== 0) return false;
+  const stack = [];
+  const brackets = ['[', ']', '{', '}', '(', ')', '<', '>'];
+  const arr = str.split('');
+  if (brackets.indexOf(arr[0]) !== 0 && brackets.indexOf(arr[0]) % 2 !== 0) return false;
+
+  for (let i = 0; i < arr.length; i += 1) {
+    if (brackets.indexOf(arr[i]) === 0 || brackets.indexOf(arr[i]) % 2 === 0) {
+      stack.push(arr[i]);
+    } else if (brackets.indexOf(stack[stack.length - 1]) + 1 === brackets.indexOf(arr[i])) {
+      stack.pop();
+    }
+  }
+  return stack.length === 0;
 }
 
 
@@ -335,8 +358,17 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  if (n === 10) return num;
+  let startNum = num;
+  let result = '';
+  // let next;
+  while (startNum > 0) {
+    // next = Math.floor(startNum / n);
+    result += startNum % n;
+    startNum = Math.floor(startNum / n);
+  }
+  return result.split('').reverse().join('');
 }
 
 

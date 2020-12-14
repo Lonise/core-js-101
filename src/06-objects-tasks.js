@@ -113,7 +113,19 @@ function fromJSON(proto, json) {
  *
  *  For more examples see unit tests.
  */
-
+/* class Css {
+  constructor(op) {
+    this.cssSelector = {
+      element: (op.element) ? op.element : '',
+      id: (op.id) ? op.id : '',
+      class: (op.class) ? op.class : '',
+      attr: (op.attr) ? op.attr : '',
+      pseudoClass: (op.pseudoClass) ? op.pseudoClass : '',
+      pseudoElement: (op.pseudoElement) ? op.pseudoElement : '',
+      id: (op.id) ? op.id : '',
+    }
+  }
+} */
 const cssSelectorBuilder = {
   element(/* value */) {
     throw new Error('Not implemented');
