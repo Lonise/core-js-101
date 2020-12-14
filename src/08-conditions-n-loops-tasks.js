@@ -267,8 +267,24 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const cardCodeStr = `${ccn}`.split('');
+  let sum = 0;
+
+  for (let i = 0; i < cardCodeStr.length; i += 1) {
+    let currentSum = Number(cardCodeStr[i]);
+
+    if ((cardCodeStr.length - i) % 2 === 0) {
+      currentSum *= 2;
+
+      if (currentSum > 9) {
+        currentSum -= 9;
+      }
+    }
+    sum += currentSum;
+  }
+
+  return sum % 10 === 0;
 }
 
 /**
@@ -362,9 +378,7 @@ function toNaryString(num, n) {
   if (n === 10) return num;
   let startNum = num;
   let result = '';
-  // let next;
   while (startNum > 0) {
-    // next = Math.floor(startNum / n);
     result += startNum % n;
     startNum = Math.floor(startNum / n);
   }
